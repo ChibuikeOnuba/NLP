@@ -10,29 +10,33 @@ def main():
     # Disply structure
     st.title('TEXT SENTIMENT ANALYZER')
     col = st.columns(2)
-    input = col[0].text_input(label='Add a comment')
-    
-    with st.form(key='input form'):
-        user_input = st.text_input('enter review')
+
+    # input section
+    with col[0].form(key='input form'):
+        user_input = st.text_input('Review product')
         
-        button = st.form_submit_button(label='add to list')
+        button = st.form_submit_button(label='Submit')
         
         if button:
             list_of_reviews.append(user_input)
 
-    st.write(len(list_of_reviews))
-    # sentiment analyzer
-    sia = SentimentIntensityAnalyzer()
-    output = sia.polarity_scores(i)
-    st.write(output)
-
-    if col[0].button('Submit'):
-        list_of_reviews.append(input)
-        st.write(f'Review Count: {len(list_of_reviews)}')
-         
+    st.write(f'Review Count: {len(list_of_reviews)}')
+    
+    #reviews section
     st.subheader('REVIEWS')   
     for i in list_of_reviews:
-        st.write('*',i)
+        st.write('*',i)   
+         
+    # sentiment analyzer
+    sia = SentimentIntensityAnalyzer()
+    output = sia.polarity_scores(user_input)
+    st.write(output)
+
+    #if col[0].button('Submit'):
+    #    list_of_reviews.append(input)
+    #    st.write(f'Review Count: {len(list_of_reviews)}')
+         
+
     
     
 
