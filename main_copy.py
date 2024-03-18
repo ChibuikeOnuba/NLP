@@ -3,7 +3,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
 
 def main():
-    
+    # function to classify the sentiment
     def remark(com):
         if com > 0.25:
             return 'positive'
@@ -11,9 +11,21 @@ def main():
             return 'negative'
         else:
             return 'neutral'
+        
     
+    # Function to color text
+    def text_color(value):
+        if value == 'negative':
+            return "red"  # Green color for positive values
+        elif value == 'positive':
+            return "lightgreen"    # Red color for negative values
+        else:
+            return "yellow"
+    
+    # creating the dictionary of reviews
     if 'list_of_reviews' not in st.session_state:
         st.session_state.list_of_reviews={}
+        
     # Disply structure
     st.title('TEXT SENTIMENT ANALYZER')
     col = st.columns(2)
@@ -42,11 +54,14 @@ def main():
     #reviews section
     st.subheader('REVIEWS')   
     for i,j in st.session_state.list_of_reviews.items():
-        st.write('*',i,'[',j,']')   
-         
+        
+        color = text_color(j)   
+        colored_text = f'<span style="color:{color}">{j}</span>'
+        res = f'* {i} \[{colored_text}\]'
+        st.write(res, unsafe_allow_html=True)
 
 
-    #if col[0].button('Submit'):
+
     #    list_of_reviews.append(input)
     #    st.write(f'Review Count: {len(list_of_reviews)}')
          
