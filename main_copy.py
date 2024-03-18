@@ -1,6 +1,11 @@
+import pandas as pd
 import streamlit as st
 from nltk.sentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import seaborn as sns
+import warnings
+warnings.filterwarnings('ignore')
 
 def main():
     # function to classify the sentiment
@@ -60,21 +65,20 @@ def main():
         res = f'* {i} \[{colored_text}\]'
         st.write(res, unsafe_allow_html=True)
 
-
-
-    #    list_of_reviews.append(input)
-    #    st.write(f'Review Count: {len(list_of_reviews)}')
-         
-
-
-
+    st.set_option('deprecation.showPyplotGlobalUse', False)   
     # Plotting the bar chart
+    remark_list = list(st.session_state.list_of_reviews.values())
 
-
-
-    # COMMENT
-    st.text('Note: The compound value shows the sentiment of the comment on a scale of -1 and 1.')
-    st.text('values closer to 1 are positive reviews while values closer to -1 are negative reviews')
+    value_counts = pd.Series(remark_list).value_counts().reset_index()
+    value_counts.columns = ['Customer Remark', 'Count']
+    # Plot bar chart
+    plt.figure(figsize=(5,4))
+    sns.barplot(x='Customer Remark', y='Count', data=value_counts)
+    plt.xlabel('Count')
+    plt.ylabel('Customer Remark')
+    plt.title('Value Counts of Customer remark')
+    plt.gca().yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+    st.pyplot()
 
 if __name__ == "__main__":
     main()
