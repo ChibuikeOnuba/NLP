@@ -4,8 +4,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import seaborn as sns
-import warnings
-warnings.filterwarnings('ignore')
+
 
 def main():
     # function to classify the sentiment
@@ -32,7 +31,7 @@ def main():
         st.session_state.list_of_reviews={}
         
     # Disply structure
-    st.title('TEXT SENTIMENT ANALYZER')
+    st.title('ReviewScope')
     col = st.columns(2)
 
     # input section
@@ -72,13 +71,13 @@ def main():
     value_counts = pd.Series(remark_list).value_counts().reset_index()
     value_counts.columns = ['Customer Remark', 'Count']
     # Plot bar chart
-    plt.figure(figsize=(5,4))
+    plt.figure(figsize=(8,6))
     sns.barplot(x='Customer Remark', y='Count', data=value_counts)
     plt.xlabel('Count')
     plt.ylabel('Customer Remark')
     plt.title('Value Counts of Customer remark')
     plt.gca().yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-    st.pyplot()
+    col[1].pyplot()
 
 if __name__ == "__main__":
     main()
